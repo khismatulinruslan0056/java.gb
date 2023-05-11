@@ -1,4 +1,3 @@
-package hw3;
 
 
 import java.io.IOException;
@@ -22,15 +21,20 @@ public class hw3 {
         switch (task) {
         // Задание 1
             case ("1"):
-
+            ArrayList<Integer> numbs = fillArrayList();
+            System.out.println(numbs);
+            mergeSort(numbs);
+            System.out.println(mergeSort(numbs));
+            
                 break;
         // Задание 2
             case ("2"):
-            deleteEven();
+
+            System.out.println(deleteEven(fillArrayList()));
                 break;
         // Задание 3
             case ("3"):
-            infoAboutList();
+            infoAboutList(fillArrayList());
             break;
         }
        
@@ -45,68 +49,84 @@ public class hw3 {
         return iScanner.nextLine();
     }
     
+    public static ArrayList<Integer> fillArrayList() {
+        ArrayList<Integer> numbs = new ArrayList<Integer>(); 
+        Random rn = new Random();
+        for (int i = 0; i < 4; i++) {
+            numbs.add(rn.nextInt(50));
+        }
+        return numbs;
+    }
     // Реализовать алгоритм сортировки слиянием
 
-    // ArrayList<Integer> numbs = new ArrayList<Integer>(); 
-    // Random rn = new Random();
-    // for (int i = 0; i < 8; i++) {
-    //     numbs.add(rn.nextInt(50));
-    // }
+
     
 
-    // public static ArrayList<Integer> mergeSort(ArrayList<Integer> listss) {
-    //     int cup = listss.size();
-    //     if (cup <= 2) {
-    //         return listss;
-    //     }
-    //     int m = 0;
-    //     int n = 0;
+    public static ArrayList<Integer> mergeSort(ArrayList<Integer> listss) {
+        int cup = listss.size();
+        if (cup <= 1) {
+            return listss;
+        }
+        int m = 0;
+        int n = 0;
 
-    //     ArrayList<Integer> listA = new ArrayList<Integer>(cup/2);
-    //     ArrayList<Integer> listB = new ArrayList<Integer>(cup - cup/2);
+        ArrayList<Integer> listResult = new ArrayList<Integer>(cup);
+        ArrayList<Integer> listA = new ArrayList<Integer>(cup/2);
+        ArrayList<Integer> listB = new ArrayList<Integer>(cup - cup/2);
+
+        for (int i = 0; i < cup; i++) {
+            if (i < cup / 2) listA.add(listss.get(i));
+            else listB.add(listss.get(i));
+        }
 
 
-    //     while 
+        while (m < listA.size() && n < listB.size()) {
+            if (listA.get(m) <= listB.get(n)){ 
+                listResult.add(listA.get(m));
+                m++;
+            }
+            else {
+                listResult.add(listB.get(n));
+                n++;               
+            }
+        }
+
+        while (m < listA.size()) {
+            listResult.add(listA.get(m));
+            m++;
+        }
+
+        while (n < listB.size()) {
+            listResult.add(listB.get(n));
+            n++;
+        }
 
 
-    //     return listss;
+       // System.out.println(listA);
+       // System.out.println(listB);
+
+        return mergeSort(listss); // не разобрался как рекурсивно правильно вызвать
 
 
         
-    // }
+    }
 
     // Пусть дан произвольный список целых чисел, удалить из него чётные числа
  
-    public static void deleteEven() {
-        ArrayList<Integer> numbs = new ArrayList<Integer>(); 
-        Random rn = new Random();
-        for (int i = 0; i < 10; i++) {
-            numbs.add(rn.nextInt(50));
-        }
-
-        System.out.println(numbs);
-
-
+    public static ArrayList<Integer>  deleteEven(ArrayList<Integer> numbs) {
         for (int i = 0; i < numbs.size(); i++) {
             if (numbs.get(i) % 2 == 0) numbs.remove(i);
             
         }
-        System.out.println(numbs);
-
+        return numbs;
     }
 
 
 
    // Задан целочисленный список ArrayList. Найти минимальное, максимальное и среднее из этого списка.  
 
-    public static void infoAboutList() {
-        ArrayList<Integer> numbs = new ArrayList<Integer>(); 
-        Random rn = new Random();
-        for (int i = 0; i < 10; i++) {
-            numbs.add(rn.nextInt(50));
-        }
+    public static void infoAboutList(ArrayList<Integer> numbs) {
 
-        System.out.println(numbs);
 
         int minOfList = numbs.get(0);
         int maxOfList = numbs.get(0);
